@@ -1,0 +1,46 @@
+version: '3.6'
+
+services:
+
+  node-prod:
+    build:
+      context: ./node
+      dockerfile: Dockerfile-prod
+    restart: always
+    volumes:
+      - './node:/usr/src/app'
+      - '/usr/src/app/node_modules'
+#    ports:
+#      - 5000:5000
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=${MONGO_URI}
+      - PORT=5000
+#    depends_on:
+#      - mongodb-prod
+
+  client-prod:
+    build:
+      context: ./client
+      dockerfile: Dockerfile-prod
+#    volumes:
+#      - './client:/usr/src/app'
+#      - '/usr/src/app/node_modules'
+#    ports:
+#      - 5000:5000
+    environment:
+      - NODE_ENV=production
+#      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    depends_on:
+      - node-prod
+
+  nginx-prod:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile-prod
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - node-prod
+      - client-prod
