@@ -19,7 +19,7 @@ The project can be installed using either of the following mechanisms:
   Use the "Clone or download" button and select "Download ZIP" to copy the entire project, and copy those into your project.
 * Using git to clone
     ```sh
-    git clone git://
+    git clone https://github.com/lionell-paquit/cash_flow_tracker.git
     ```
 
 ## Using docker-compose file
